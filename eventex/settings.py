@@ -29,6 +29,7 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = [
     'eventex-lucianocosta.herokuapp.com',
+    'localhost'
 ]
 
 
