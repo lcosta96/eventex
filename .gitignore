@@ -10,5 +10,8 @@ db.sqlite3
 media
 staticfiles/
 
+### Python ###
+.ipynb_checkpoints/
+
 ### PyCharm ###
 .idea/
