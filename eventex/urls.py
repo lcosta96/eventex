@@ -14,6 +14,7 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from eventex.core.views import home
 from eventex.subscriptions.views import subscribe
@@ -23,3 +24,5 @@ urlpatterns = [
     url(r'^inscricao/$', subscribe),
     url(r'^admin/', include(admin.site.urls)),
 ]
+
+urlpatterns += staticfiles_urlpatterns()
