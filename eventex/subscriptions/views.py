@@ -1,8 +1,8 @@
-from django.contrib import messages
 from django.core import mail
-from django.http import HttpResponseRedirect, HttpResponse, Http404
-from django.shortcuts import render
+from django.http import HttpResponseRedirect, Http404
+from django.shortcuts import render, resolve_url as r
 from django.template.loader import render_to_string
+
 from eventex.subscriptions.forms import SubscriptionForm
 from eventex.subscriptions.models import Subscription
 
@@ -25,7 +25,7 @@ def subscribe(request):
                        ['contato@eventex.com', form.cleaned_data['email']]
         )
 
-        return HttpResponseRedirect('/inscricao/{}/'.format(subscription.pk))
+        return HttpResponseRedirect(r('subscriptions:detail', subscription.pk))
 
     else:
         context = {'form': SubscriptionForm()}
