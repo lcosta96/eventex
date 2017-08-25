@@ -5,8 +5,8 @@ from django.shortcuts import resolve_url as r
 
 class SubscribePostTest(TestCase):
     def setUp(self):
-        self.data = dict(name='Luciano Costa', cpf='12345678901',
-                    email='luciano@costa.com', phone='98-98334-2138')
+        self.data = dict(name='John Doe', cpf='12345678901',
+                    email='johndoe@email.com', phone='98-984743028')
         self.response = self.client.post(r('subscriptions:new'), self.data)
         self.email = mail.outbox[0]
 
