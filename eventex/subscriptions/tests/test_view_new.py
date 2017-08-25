@@ -37,32 +37,9 @@ class SubscriptionsNewGet(TestCase):
         form = self.response.context['form']
         self.assertSequenceEqual(['name', 'cpf', 'email', 'phone'], list(form.fields))
 
-    def test_cfp_is_digit(self):
-        """ CFP must only accept digits """
-        form = self.make_validated_form(cpf='ABCD567890')
-        self.assertFormErrorCode(form, 'cpf', 'digits')
 
-    def test_cpf_has_eleven_digits(self):
-        """ CPF must have 11 digits """
-        form = self.make_validated_form(cpf='1234')
-        self.assertFormErrorCode(form, 'cpf', 'length')
-
-    def test_name_must_be_capitalized(self):
-        """ Name must be capitalized """
-        form = self.make_validated_form(name='JOHN doe')
-        self.assertEqual('John Doe', form.cleaned_data['name'])
-
-
-    def assertFormErrorCode(self, form, field, code):
-        errors = form.errors.as_data()
-        errors_list = errors[field]
-        exception = errors_list[0]
-        self.assertEqual(code, exception.code)
-
-    def make_validated_form(self, **kwargs):
-        valid = dict(name='John Doe', cpf='12345678901',
-                     email='johndoe@email.com', phone='98-984743028')
-        data = dict(valid, **kwargs)
-        form = SubscriptionForm(data)
-        form.is_valid()
-        return form
+class TemplateRegressionTest(TestCase):
+    def test_template_has_no_field_errors(self):
+        invalid_data = dict(name='John Doe', cpf='12345678901')
+        response = self.client.post(r('subscriptions:new'), invalid_data)
+        self.assertContains(response, '<ul class="errorlist nonfield">')
