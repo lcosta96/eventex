@@ -14,7 +14,7 @@ def subscribe(request):
             return render(request, 'subscriptions/subscription_form.html',
                           {'form': form})
 
-        subscription = Subscription.objects.create(**form.cleaned_data)
+        subscription = form.save()
 
         body = render_to_string('subscriptions/subscription_email.txt',
                                 {'subscription' : subscription})
